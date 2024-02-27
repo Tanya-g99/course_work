@@ -1,0 +1,38 @@
+find_package(GTest REQUIRED)
+add_executable(${PROJECT_NAME}_tests tests.cpp)
+add_executable(${PROJECT_NAME}_tests_float tests_float.cpp)
+add_executable(${PROJECT_NAME}_brightness_tests brightness_tests.cpp)
+
+find_package(benchmark REQUIRED)
+add_executable(${PROJECT_NAME}_benchmark_naive benchmark_naive.cpp)
+add_executable(${PROJECT_NAME}_benchmark_dda benchmark_dda.cpp)
+add_executable(${PROJECT_NAME}_benchmark_bresenham_float benchmark_bresenham_float.cpp)
+add_executable(${PROJECT_NAME}_benchmark_bresenham_int benchmark_bresenham_int.cpp)
+add_executable(${PROJECT_NAME}_benchmark_mid benchmark_mid.cpp)
+add_executable(${PROJECT_NAME}_benchmark_gs benchmark_gs.cpp)
+add_executable(${PROJECT_NAME}_benchmark_wu benchmark_wu.cpp)
+
+target_link_libraries(${PROJECT_NAME}_tests PUBLIC GTest::gtest GTest::gtest_main algorithms pixel drawing)
+target_link_libraries(${PROJECT_NAME}_tests_float PUBLIC GTest::gtest GTest::gtest_main algorithms pixel drawing)
+target_link_libraries(${PROJECT_NAME}_brightness_tests PUBLIC GTest::gtest GTest::gtest_main algorithms pixel drawing)
+
+target_link_libraries(${PROJECT_NAME}_benchmark_naive PUBLIC benchmark::benchmark benchmark::benchmark_main -lbenchmark -pthread algorithms pixel)
+target_link_libraries(${PROJECT_NAME}_benchmark_dda PUBLIC benchmark::benchmark benchmark::benchmark_main -lbenchmark -pthread algorithms pixel)
+target_link_libraries(${PROJECT_NAME}_benchmark_bresenham_float PUBLIC benchmark::benchmark benchmark::benchmark_main -lbenchmark -pthread algorithms pixel)
+target_link_libraries(${PROJECT_NAME}_benchmark_bresenham_int PUBLIC benchmark::benchmark benchmark::benchmark_main -lbenchmark -pthread algorithms pixel)
+target_link_libraries(${PROJECT_NAME}_benchmark_mid PUBLIC benchmark::benchmark benchmark::benchmark_main -lbenchmark -pthread algorithms pixel)
+target_link_libraries(${PROJECT_NAME}_benchmark_gs PUBLIC benchmark::benchmark benchmark::benchmark_main -lbenchmark -pthread algorithms pixel)
+target_link_libraries(${PROJECT_NAME}_benchmark_wu PUBLIC benchmark::benchmark benchmark::benchmark_main -lbenchmark -pthread algorithms pixel)
+
+add_test(NAME ${PROJECT_NAME}_benchmark_naive COMMAND ${PROJECT_NAME}_benchmark_naive)
+add_test(NAME ${PROJECT_NAME}_benchmark_dda COMMAND ${PROJECT_NAME}_benchmark_dda)
+add_test(NAME ${PROJECT_NAME}_benchmark_bresenham_float COMMAND ${PROJECT_NAME}_benchmark_bresenham_float)
+add_test(NAME ${PROJECT_NAME}_benchmark_bresenham_int COMMAND ${PROJECT_NAME}_benchmark_bresenham_int)
+add_test(NAME ${PROJECT_NAME}_benchmark_mid COMMAND ${PROJECT_NAME}_benchmark_mid)
+add_test(NAME ${PROJECT_NAME}_benchmark_gs COMMAND ${PROJECT_NAME}_benchmark_gs)
+add_test(NAME ${PROJECT_NAME}_benchmark_wu COMMAND ${PROJECT_NAME}_benchmark_wu)
+
+add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
+add_test(NAME ${PROJECT_NAME}_tests_float COMMAND ${PROJECT_NAME}_tests_float)
+add_test(NAME ${PROJECT_NAME}_brightness_tests COMMAND ${PROJECT_NAME}_brightness_tests)
+
